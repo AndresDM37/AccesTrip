@@ -5,11 +5,11 @@ import FavoritesView from "./views/FavoritesView";
 import MessagesView from "./views/MessagesView";
 import ProfileView from "./views/ProfileView";
 import { DestinationProvider } from "./context/DestinationContext";
+import Sidebar from "./components/layout/Sidebar"; 
 
 export default function App() {
   const [activeTab, setActiveTab] = useState("inicio");
 
-  // Función para renderizar la vista activa según la pestaña seleccionada
   const renderActiveView = () => {
     switch (activeTab) {
       case "inicio":
@@ -30,7 +30,8 @@ export default function App() {
   return (
     <DestinationProvider>
       <div className="flex min-h-screen bg-gray-100">
-        {renderActiveView()}
+        <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+        <div className="flex-1">{renderActiveView()}</div>
       </div>
     </DestinationProvider>
   );

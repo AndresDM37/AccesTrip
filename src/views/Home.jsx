@@ -1,10 +1,10 @@
 import { useState } from "react";
-import Sidebar from "../components/layout/Sidebar";
 import Header from "../components/layout/Header";
 import CategoriesSection from "../components/home/CategoriesSection";
 import PopularDestinations from "../components/home/PopularDestinations";
 import FeaturedExperience from "../components/home/FeaturedExperience";
 import DestinationDetail from "../components/destination/DestinationDetail";
+import PageLayout from "../components/layout/PageLayout";
 import { destinations } from "../data/destinations";
 
 export default function HomeView() {
@@ -20,14 +20,9 @@ export default function HomeView() {
   };
 
   return (
-    <>
-      {/* Sidebar */}
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-
+    <PageLayout activeTab={activeTab} setActiveTab={setActiveTab}>
       {/* Main Content */}
       <div className="flex-1">
-        {/* Top Navigation Bar */}
-        <Header />
 
         {/* Main Content Area */}
         <main className="container mx-auto px-4 py-6">
@@ -52,9 +47,9 @@ export default function HomeView() {
           <CategoriesSection />
 
           {/* Popular Destinations */}
-          <PopularDestinations 
-            destinations={destinations} 
-            onSelectDestination={handleSelectDestination} 
+          <PopularDestinations
+            destinations={destinations}
+            onSelectDestination={handleSelectDestination}
           />
 
           {/* Featured Experience */}
@@ -62,13 +57,13 @@ export default function HomeView() {
 
           {/* Destination Detail Page */}
           {selectedDestination && (
-            <DestinationDetail 
-              destination={selectedDestination} 
-              onClose={handleCloseDetail} 
+            <DestinationDetail
+              destination={selectedDestination}
+              onClose={handleCloseDetail}
             />
           )}
         </main>
       </div>
-    </>
+    </PageLayout>
   );
 }
