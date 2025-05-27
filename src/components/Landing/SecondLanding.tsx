@@ -40,7 +40,7 @@ export default function SecondLanding({ setActiveTab, direction }: Props) {
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: "url('/images/ponta-do-mangue.jpg')",
+          backgroundImage: "url('/images/coveñas.jpg')",
           filter: "blur(4px) brightness(0.5)",
           zIndex: 0,
         }}

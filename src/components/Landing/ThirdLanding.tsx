@@ -37,7 +37,7 @@ export default function ThirdLanding({ setActiveTab, direction }: Props) {
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: "url('/images/ponta-do-mangue.jpg')",
+          backgroundImage: "url('/images/amazonas.jpg')",
           filter: "blur(4px) brightness(0.5)",
         }}
       />
@@ -67,7 +67,7 @@ export default function ThirdLanding({ setActiveTab, direction }: Props) {
             className="mt-10 px-10 py-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-full transition-all duration-300"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.0, duration: 1.2, ease: "easeOut" }}
+            transition={{ delay: 2.0, duration: 0.6, ease: "easeOut" }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
