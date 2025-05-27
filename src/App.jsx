@@ -1,38 +1,73 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import LandingPage from "./views/LandingPage";
 import HomeView from "./views/Home";
 import ExploreView from "./views/ExploreView";
 import FavoritesView from "./views/FavoritesView";
 import MessagesView from "./views/MessagesView";
 import ProfileView from "./views/ProfileView";
 import { DestinationProvider } from "./context/DestinationContext";
-import Sidebar from "./components/layout/Sidebar"; 
+import Sidebar from "./components/layout/Sidebar";
+
+// Mapea las rutas con tus tabs
+const pathToTab = {
+  "/": "landing",
+  "/inicio": "inicio",
+  "/mapa": "mapa",
+  "/favoritos": "favoritos",
+  "/mensajes": "mensajes",
+  "/perfil": "perfil",
+};
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState("inicio");
+  const [activeTab, setActiveTab] = useState("landing");
+
+  // Esto se ejecuta al inicio: lee la URL actual y cambia el tab
+  useEffect(() => {
+    const currentPath = window.location.pathname;
+    const tab = pathToTab[currentPath] || "landing";
+    setActiveTab(tab);
+  }, []);
+
+  // Cambiar la URL cuando cambia el tab
+  useEffect(() => {
+    const currentPath = Object.entries(pathToTab).find(
+      ([, tab]) => tab === activeTab
+    )?.[0];
+
+    if (currentPath && window.location.pathname !== currentPath) {
+      window.history.pushState({}, "", currentPath);
+    }
+  }, [activeTab]);
 
   const renderActiveView = () => {
     switch (activeTab) {
+      case "landing":
+        return <LandingPage setActiveTab={setActiveTab} />;
       case "inicio":
-        return <HomeView />;
+        return <HomeView activeTab={activeTab} setActiveTab={setActiveTab} />;
       case "mapa":
-        return <ExploreView />;
+        return <ExploreView activeTab={activeTab} setActiveTab={setActiveTab} />;
       case "favoritos":
-        return <FavoritesView />;
+        return <FavoritesView activeTab={activeTab} setActiveTab={setActiveTab} />;
       case "mensajes":
-        return <MessagesView />;
+        return <MessagesView activeTab={activeTab} setActiveTab={setActiveTab} />;
       case "perfil":
-        return <ProfileView />;
+        return <ProfileView activeTab={activeTab} setActiveTab={setActiveTab} />;
       default:
-        return <HomeView />;
+        return <LandingPage setActiveTab={setActiveTab} />;
     }
   };
 
   return (
-    <DestinationProvider>
+  <DestinationProvider>
+    {activeTab === "landing" ? (
+      renderActiveView()
+    ) : (
       <div className="flex min-h-screen bg-gray-100">
         <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
         <div className="flex-1">{renderActiveView()}</div>
       </div>
-    </DestinationProvider>
-  );
+    )}
+  </DestinationProvider>
+);
 }

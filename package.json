@@ -18,7 +18,8 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.6.1",
     "react-vis": "^1.12.1",
-    "recharts": "^2.15.3"
+    "recharts": "^2.15.3",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
