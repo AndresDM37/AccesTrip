@@ -5,26 +5,24 @@ interface Props {
   direction: number;
 }
 
-export default function SecondLanding({ setActiveTab, direction }: Props) {
-  const handleNext = () => {
-    setActiveTab("thirdlanding");
-  };
+export default function ThirdLanding({ setActiveTab, direction }: Props) {
+  const handleNext = () => setActiveTab("inicio");
 
   const variants = {
-    initial: (dir: number) => ({
-      x: dir > 0 ? "100%" : "-100%", // Si direction es -1, entra desde la izquierda
+    initial: {
+      x: "100%", // Siempre entra desde la derecha
       opacity: 1,
-    }),
+    },
     animate: {
       x: 0,
       opacity: 1,
       transition: { duration: 1.2, ease: "easeInOut" },
     },
-    exit: {
-      x: "-100%", // Siempre sale hacia la izquierda
+    exit: (direction: number) => ({
+      x: direction > 0 ? "-100%" : "100%",
       opacity: 1,
       transition: { duration: 1.2, ease: "easeInOut" },
-    },
+    }),
   };
 
   return (
@@ -36,51 +34,44 @@ export default function SecondLanding({ setActiveTab, direction }: Props) {
       animate="animate"
       exit="exit"
     >
-      {/* Fondo con imagen y overlay */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
           backgroundImage: "url('/images/ponta-do-mangue.jpg')",
           filter: "blur(4px) brightness(0.5)",
-          zIndex: 0,
         }}
       />
       <div className="absolute inset-0 bg-black opacity-50 z-10" />
-
-      {/* Contenido */}
       <div className="relative z-20 flex flex-col items-center justify-center text-center min-h-screen px-6">
         <div className="max-w-xl">
           <motion.h1 
             className="text-white font-extrabold text-4xl md:text-5xl leading-tight tracking-tight"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.4, duration: 1.2, ease: "easeOut" }}
+            transition={{ delay: 1.4, duration: 0.8, ease: "easeOut" }}
           >
-            El mundo te está
-            <br />
-            esperando, ve a
-            <br />
-            <span className="text-orange-400">descubrirlo.</span>
+            La gente no viaja,<br />
+            los viajes llevan a<br />
+            la <span className="text-orange-400">gente.</span>
           </motion.h1>
           <motion.p 
-            className="mt-6 text-gray-300 text-base md:text-lg leading-relaxed"
+            className="mt-6 text-gray-300 text-base md:text-lg"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.7, duration: 1.2, ease: "easeOut" }}
+            transition={{ delay: 1.7, duration: 0.8, ease: "easeOut" }}
           >
-            Embárquese en un viaje inolvidable aventurándose fuera de su zona de confort.
-            El mundo está lleno de joyas ocultas que esperan ser descubiertas.
+            Para disfrutar al máximo de tu aventura sólo tienes que salir e ir donde más te guste. Te esperamos.
           </motion.p>
           <motion.button
             onClick={handleNext}
             className="mt-10 px-10 py-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-full transition-all duration-300"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.0, duration: 0.6, ease: "easeOut" }}
+            transition={{ delay: 2.0, duration: 1.2, ease: "easeOut" }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Siguiente
+            Iniciar Sesión
           </motion.button>
         </div>
       </div>

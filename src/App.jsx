@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import LandingPage from "./views/LandingPage";
 import SecondLanding from "./components/Landing/SecondLanding";
-import Thirdlanding from "./components/Landing/ThridLanding";
+import Thirdlanding from "./components/Landing/ThirdLanding";
 import HomeView from "./views/Home";
 import ExploreView from "./views/ExploreView";
 import FavoritesView from "./views/FavoritesView";
