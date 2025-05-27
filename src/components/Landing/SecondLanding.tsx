@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
 
-export default function MainLanding({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
-  const handleStart = () => {
-    setActiveTab("secondlanding");
+export default function SecondLanding({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
+  const handleNext = () => {
+    setActiveTab("thirdlanding");
   };
 
   return (
+
         <div className="relative flex flex-col items-center justify-center text-center min-h-screen px-6">
         {/* Fondo con imagen y overlay */}
         <div
@@ -21,21 +22,18 @@ export default function MainLanding({ setActiveTab }: { setActiveTab: (tab: stri
         {/* Contenido */}
         <div className="relative z-20 max-w-xl">
             <h1 className="text-white font-extrabold leading-tight tracking-tight text-4xl md:text-5xl">
-            La vida es breve,
-            <br />
-            pero el universo
-            <br />
-            es <span className="text-orange-400">inmenso.</span>
+            El mundo te está <br />
+            esperando, ve a <br />
+            <span className="text-orange-400">descubrirlo.</span>
             </h1>
-            <p className="mt-6 text-gray-300 text-base md:text-lg leading-relaxed">
-            En AccessTrip, creamos conexiones auténticas entre viajeros y comunidades locales,
-            ofreciendo experiencias únicas que enriquecen tanto a los visitantes como a los anfitriones.
+            <p className="mt-6 text-gray-300 text-base md:text-lg leading-relaxed text-center">
+            Embárquese en un viaje inolvidable aventurándose fuera de su zona de confort. El mundo está lleno de joyas ocultas que esperan ser descubiertas.
             </p>
             <button
-            onClick={handleStart}
+            onClick={handleNext}
             className="mt-10 px-10 py-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-full transition duration-300"
             >
-            Vamos a comenzar
+            Siguiente
             </button>
         </div>
         </div>
