@@ -2,8 +2,8 @@ import { Home, Map, Heart, MessageSquare, User } from "lucide-react";
 
 export default function Sidebar({ activeTab, setActiveTab }) {
   return (
-    <div className="w-64 h-screen bg-white shadow-lg hidden md:flex flex-col justify-between">
-      <div>
+    <div className="w-64 bg-white shadow-lg hidden md:flex flex-col justify-between">
+      <div className="flex-1 flex flex-col">
         <div className="p-4 flex items-center justify-center border-b">
           <div className="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center text-white font-bold text-xl">
             A
@@ -11,7 +11,7 @@ export default function Sidebar({ activeTab, setActiveTab }) {
           <a href="/inicio" className="ml-2 font-bold text-lg">ACCESSTRIP</a>
         </div>
 
-        <nav className="p-4">
+        <nav className="p-4 flex-1">
           <ul className="space-y-2">
             {[
               { id: "inicio", label: "Inicio", icon: <Home className="w-5 h-5 mr-3" /> },
@@ -38,7 +38,6 @@ export default function Sidebar({ activeTab, setActiveTab }) {
         </nav>
       </div>
 
-      {/* Footer */}
       <div className="text-center text-sm text-gray-400 p-4 border-t">
         Accesstrip - ©2025
       </div>
