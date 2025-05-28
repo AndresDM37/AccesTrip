@@ -1,9 +1,12 @@
 import { useState } from "react";
 import PageLayout from "../components/layout/PageLayout";
 import { User, Settings, CreditCard, Clock, LogOut } from "lucide-react";
+import { useUser } from "../context/UserContext";
+
 
 const ProfileView = () => {
   const [activeTab, setActiveTab] = useState("perfil");
+  const { user } = useUser();
 
   const menuItems = [
     { icon: <User className="w-5 h-5" />, text: "Información personal" },
@@ -24,8 +27,15 @@ const ProfileView = () => {
               className="w-full h-full object-cover"
             />
           </div>
-          <h1 className="text-2xl font-bold">Nombre de Usuario</h1>
-          <p className="text-gray-600">usuario@correo.com</p>
+          
+          <div className="flex flex-col items-center">
+            <span className="text-2xl font-bold">
+              {user?.name || "Usuario"}
+            </span>
+            <span className="text-gray-600">
+              {user?.email || "usuario@ejemplo.com"}
+            </span>
+          </div>
         </div>
 
         <div className="bg-white rounded-lg shadow overflow-hidden">

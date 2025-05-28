@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { FiMail } from "react-icons/fi";
 import emailjs from "@emailjs/browser";
 import BackButton from "../components/ui/BackButton";
+import { useUser } from "../context/UserContext";
 
 type RegistroProps = {
   setActiveTab: (tab: string) => void;
@@ -79,6 +80,7 @@ const Registro = ({ setActiveTab }: RegistroProps) => {
   const [emailSent, setEmailSent] = useState(false);
   const [sending, setSending] = useState(false);
   const [sentEmail, setSentEmail] = useState("");
+  const { setUser } = useUser();
 
   const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
 
@@ -161,6 +163,9 @@ const Registro = ({ setActiveTab }: RegistroProps) => {
     }
 
     localStorage.setItem("usuarios", JSON.stringify([...users, newUser]))
+
+    //Contexto usuario
+    setUser({ name, email });
 
     try {
       await emailjs.send(serviceId, templateId, templateParams, publicKey);
