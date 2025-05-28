@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 
 interface Props {
-  setActiveTab: (tab: "mainlanding" | "secondlanding" | "thirdlanding" | "inicio") => void;
+  setActiveTab: (tab: "secondlanding" ) => void;
   direction: number;
 }
 

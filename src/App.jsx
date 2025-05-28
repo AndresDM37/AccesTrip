@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import LandingPage from "./views/LandingPage";
 import SecondLanding from "./components/Landing/SecondLanding";
 import Thirdlanding from "./components/Landing/ThirdLanding";
+import Login from "./views/login";
 import HomeView from "./views/Home";
 import ExploreView from "./views/ExploreView";
 import FavoritesView from "./views/FavoritesView";
@@ -15,6 +16,7 @@ const pathToTab = {
   "/": "landing",
   "/segunda": "secondlanding",
   "/tercera": "thirdlanding",
+  "/login": "login",
   "/inicio": "inicio",
   "/mapa": "mapa",
   "/favoritos": "favoritos",
@@ -51,6 +53,8 @@ export default function App() {
         return <SecondLanding setActiveTab={setActiveTab} />
       case "thirdlanding":
         return <Thirdlanding setActiveTab={setActiveTab} />
+      case "login":
+        return <Login setActiveTab={setActiveTab} />
       case "inicio":
         return <HomeView activeTab={activeTab} setActiveTab={setActiveTab} />;
       case "mapa":
@@ -68,7 +72,7 @@ export default function App() {
 
   return (
   <DestinationProvider>
-    {["landing", "secondlanding", "thirdlanding"].includes(activeTab) ? (
+    {["landing", "secondlanding", "thirdlanding", "login", "", ""].includes(activeTab) ? (
       renderActiveView()
     ) : (
       <div className="flex min-h-screen bg-gray-100">

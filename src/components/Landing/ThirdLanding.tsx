@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
 
 interface Props {
-  setActiveTab: (tab: "mainlanding" | "secondlanding" | "thirdlanding" | "inicio") => void;
+  setActiveTab: (tab: "login") => void;
   direction: number;
 }
 
 export default function ThirdLanding({ setActiveTab, direction }: Props) {
-  const handleNext = () => setActiveTab("inicio");
+  const handleNext = () => setActiveTab("login");
 
   const variants = {
     initial: {
