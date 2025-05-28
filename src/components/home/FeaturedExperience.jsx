@@ -11,7 +11,7 @@ const FeaturedExperience = () => {
     } else {
       document.body.style.overflow = "auto";
     }
-    
+
     // Limpieza cuando el componente se desmonta
     return () => {
       document.body.style.overflow = "auto";
@@ -31,7 +31,11 @@ const FeaturedExperience = () => {
       </div>
 
       {/* Versión normal */}
-      <div className={`bg-white rounded-xl shadow-sm overflow-hidden ${isExpanded ? 'blur-sm' : ''}`}>
+      <div
+        className={`bg-white rounded-xl shadow-sm overflow-hidden ${
+          isExpanded ? "blur-sm" : ""
+        }`}
+      >
         <div className="flex flex-col md:flex-row">
           <div className="md:w-1/2">
             <img
@@ -270,12 +274,12 @@ const FeaturedExperience = () => {
                     transition={{ duration: 0.4, delay: 0.4 }}
                     className="flex flex-col sm:flex-row gap-4"
                   >
-                    <button className="bg-orange-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-orange-600 transition-colors flex-1">
+                    <a href="/reserva" className="text-center bg-orange-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-orange-600 transition-colors flex-1 cursor-pointer">
                       Reservar ahora
-                    </button>
-                    <button className="border border-orange-500 text-orange-500 px-6 py-3 rounded-lg font-medium hover:bg-orange-50 transition-colors flex-1">
+                    </a>
+                    <a href="/favoritos" className="text-center border border-orange-500 text-orange-500 px-6 py-3 rounded-lg font-medium hover:bg-orange-50 transition-colors flex-1 cursor-pointer">
                       Añadir a favoritos
-                    </button>
+                    </a>
                   </motion.div>
                 </div>
               </div>

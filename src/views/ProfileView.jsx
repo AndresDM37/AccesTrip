@@ -19,13 +19,13 @@ const ProfileView = () => {
         <div className="flex flex-col items-center mb-8">
           <div className="w-24 h-24 rounded-full overflow-hidden mb-4">
             <img
-              src="https://i.pravatar.cc/96"
+              src="https://i.pravatar.cc/40"
               alt="Perfil"
               className="w-full h-full object-cover"
             />
           </div>
-          <h1 className="text-2xl font-bold">Juan Pérez</h1>
-          <p className="text-gray-600">juan.perez@email.com</p>
+          <h1 className="text-2xl font-bold">Nombre de Usuario</h1>
+          <p className="text-gray-600">usuario@correo.com</p>
         </div>
 
         <div className="bg-white rounded-lg shadow overflow-hidden">

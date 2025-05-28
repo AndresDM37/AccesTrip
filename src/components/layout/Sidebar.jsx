@@ -7,7 +7,7 @@ export default function Sidebar({ activeTab, setActiveTab }) {
         <div className="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center text-white font-bold text-xl">
           A
         </div>
-        <h2 className="ml-2 font-bold text-lg">ACCESSTRIP</h2>
+        <a href="/inicio" className="ml-2 font-bold text-lg">ACCESSTRIP</a>
       </div>
 
       <nav className="flex-1 p-4">

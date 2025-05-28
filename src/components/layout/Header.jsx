@@ -1,4 +1,4 @@
-import { Search, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import SearchInput from "../ui/SearchInput";
 
 export default function Header() {
@@ -9,7 +9,7 @@ export default function Header() {
           <Menu className="w-6 h-6" />
         </div>
         <SearchInput />
-        <div className="flex items-center space-x-4">
+        <a href="/perfil" className="flex items-center space-x-4">
           <span className="text-gray-700 font-semibold">Usuario</span>
           <div className="w-10 h-10 bg-gray-200 rounded-full">
             <img
@@ -18,7 +18,7 @@ export default function Header() {
               className="w-10 h-10 rounded-full"
             />
           </div>
-        </div>
+        </a>
       </div>
     </header>
   );
