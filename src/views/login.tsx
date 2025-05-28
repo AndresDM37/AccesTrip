@@ -1,21 +1,66 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-// Defino aquí el tipo para los tabs permitidos
 type LandingTab = "inicio" | "recuperar" | "registro";
 
 const Login = ({ setActiveTab }: { setActiveTab: (tab: LandingTab) => void }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailDisabled, setEmailDisabled] = useState(false);
+  const [error, setError] = useState("");
+
+  // Prellenar email desde query string y bloquear input si aplica
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const emailFromQuery = params.get("email");
+    if (emailFromQuery) {
+      setEmail(emailFromQuery);
+      setEmailDisabled(true);
+    }
+  }, []);
+
+  // Función para obtener usuarios guardados en localStorage
+  const obtenerUsuarios = (): { email: string; password: string }[] => {
+    const usuariosStr = localStorage.getItem("usuarios");
+    if (!usuariosStr) return [];
+    try {
+      return JSON.parse(usuariosStr);
+    } catch {
+      return [];
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
+
+    // Obtener usuarios del localStorage
+    const usuarios = obtenerUsuarios();
+
+    // Buscar usuario registrado
+    const user = usuarios.find(
+      (u) => u.email.toLowerCase() === email.toLowerCase()
+    );
+
+    if (!user) {
+      setError("El correo no está registrado.");
+      return;
+    }
+
+    if (user.password !== password) {
+      setError("Contraseña incorrecta.");
+      return;
+    }
+
+    // Guardar sesión de usuario
+    localStorage.setItem("usuario", JSON.stringify({ email: user.email }));
+
+    // Cambiar a pestaña "inicio"
     setActiveTab("inicio");
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-orange-100 via-white to-orange-200 sm:from-orange-200 sm:via-orange-100 sm:to-orange-300 transition-all duration-300">
       <div className="w-full max-w-md p-4 sm:p-8 bg-transparent sm:bg-white/80 sm:backdrop-blur-md sm:rounded-2xl sm:shadow-xl sm:border sm:border-orange-100 sm:hover:shadow-2xl sm:hover:scale-[1.02] sm:transition sm:duration-300 sm:ease-in-out">
-        
         <h1 className="text-4xl sm:text-3xl font-bold text-center text-slate-900 cursor-default">
           Inicio de Sesión
         </h1>
@@ -31,7 +76,10 @@ const Login = ({ setActiveTab }: { setActiveTab: (tab: LandingTab) => void }) =>
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full px-4 py-5 sm:py-4 border border-gray-300 rounded-2xl text-lg sm:text-base bg-white focus:outline-none focus:ring-2 focus:ring-orange-400 transition duration-300"
+            disabled={emailDisabled}
+            className={`w-full px-4 py-5 sm:py-4 border rounded-2xl text-lg sm:text-base bg-white focus:outline-none focus:ring-2 focus:ring-orange-400 transition duration-300
+              ${emailDisabled ? "cursor-not-allowed opacity-70" : "border-gray-300"}
+            `}
           />
 
           <input
@@ -42,6 +90,10 @@ const Login = ({ setActiveTab }: { setActiveTab: (tab: LandingTab) => void }) =>
             required
             className="w-full px-4 py-5 sm:py-4 border border-gray-300 rounded-2xl text-lg sm:text-base bg-white focus:outline-none focus:ring-2 focus:ring-orange-400 transition duration-300"
           />
+
+          {error && (
+            <p className="text-center text-red-600 font-semibold">{error}</p>
+          )}
 
           <div className="text-right">
             <button
