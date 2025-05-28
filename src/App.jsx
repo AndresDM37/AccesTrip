@@ -87,11 +87,17 @@ export default function App() {
       case "inicio":
         return <HomeView activeTab={activeTab} setActiveTab={setActiveTab} />;
       case "mapa":
-        return <ExploreView activeTab={activeTab} setActiveTab={setActiveTab} />;
+        return (
+          <ExploreView activeTab={activeTab} setActiveTab={setActiveTab} />
+        );
       case "favoritos":
-        return <FavoritesView activeTab={activeTab} setActiveTab={setActiveTab} />;
+        return (
+          <FavoritesView activeTab={activeTab} setActiveTab={setActiveTab} />
+        );
       case "mensajes":
-        return <MessagesView activeTab={activeTab} setActiveTab={setActiveTab} />;
+        return (
+          <MessagesView activeTab={activeTab} setActiveTab={setActiveTab} />
+        );
       case "perfil":
         return <ProfileView activeTab={activeTab} setActiveTab={setActiveTab} />;
       case "paquetes":
