@@ -1,4 +1,4 @@
-// LandingContainer.tsx
+
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import MainLanding from "./MainLanding";
