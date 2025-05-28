@@ -18,12 +18,12 @@ export default function SecondLanding({ setActiveTab, direction }: Props) {
     animate: {
       x: 0,
       opacity: 1,
-      transition: { duration: 1.2, ease: "easeInOut" },
+      transition: { duration: 0.8, ease: "easeInOut" },
     },
     exit: {
       x: "-100%", // Siempre sale hacia la izquierda
       opacity: 1,
-      transition: { duration: 1.2, ease: "easeInOut" },
+      transition: { duration: 0.8, ease: "easeInOut" },
     },
   };
 

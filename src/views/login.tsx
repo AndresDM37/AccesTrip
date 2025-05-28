@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 
-const Login = ({ setActiveTab }: { setActiveTab: (tab: string) => void }) => {
+// Defino aquí el tipo para los tabs permitidos
+type LandingTab = "inicio" | "recuperar" | "registro";
+
+const Login = ({ setActiveTab }: { setActiveTab: (tab: LandingTab) => void }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 

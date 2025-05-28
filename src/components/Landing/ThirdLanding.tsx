@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
+import { LandingTab } from "./LandingContainer";
 
 interface Props {
-  setActiveTab: (tab: "login") => void;
+  setActiveTab: (tab: LandingTab) => void;
   direction: number;
 }
 
@@ -10,19 +11,14 @@ export default function ThirdLanding({ setActiveTab, direction }: Props) {
 
   const variants = {
     initial: {
-      x: "100%", // Siempre entra desde la derecha
+      x: "100%", // entra desde la derecha
       opacity: 1,
     },
     animate: {
       x: 0,
       opacity: 1,
-      transition: { duration: 1.2, ease: "easeInOut" },
+      transition: { duration: 0.8, ease: "easeInOut" },
     },
-    exit: (direction: number) => ({
-      x: direction > 0 ? "-100%" : "100%",
-      opacity: 1,
-      transition: { duration: 1.2, ease: "easeInOut" },
-    }),
   };
 
   return (
@@ -44,17 +40,19 @@ export default function ThirdLanding({ setActiveTab, direction }: Props) {
       <div className="absolute inset-0 bg-black opacity-50 z-10" />
       <div className="relative z-20 flex flex-col items-center justify-center text-center min-h-screen px-6">
         <div className="max-w-xl">
-          <motion.h1 
+          <motion.h1
             className="text-white font-extrabold text-4xl md:text-5xl leading-tight tracking-tight"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.4, duration: 0.8, ease: "easeOut" }}
           >
-            La gente no viaja,<br />
-            los viajes llevan a<br />
+            La gente no viaja,
+            <br />
+            los viajes llevan a
+            <br />
             la <span className="text-orange-400">gente.</span>
           </motion.h1>
-          <motion.p 
+          <motion.p
             className="mt-6 text-gray-300 text-base md:text-lg"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
