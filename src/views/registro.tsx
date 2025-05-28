@@ -147,6 +147,7 @@ const Registro = ({ setActiveTab }: RegistroProps) => {
 
     const templateParams = {
       to_email: email,
+      name: name,
       verify_link: `${baseUrl}/login?email=${encodeURIComponent(email)}`,
     };
 
