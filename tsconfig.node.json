@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",                       // Para usar lo último de JS
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "jsx": "react-jsx",                       // Soporte JSX moderno con React 17+
+    "strict": true,                          // Activa chequeo estricto para evitar errores
+    "forceConsistentCasingInFileNames": true, // Evita problemas de mayúsculas/minúsculas en archivos
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "allowJs": true,
+    "checkJs": false,
+    "baseUrl": ".",                          // Para resolver rutas relativas
+    "paths": {
+      "@/*": ["src/*"]                       // Si usas alias @ para src
+    }
+  },
+  "include": ["src", "vite.config.ts"],     // Incluye src para que compile todo tu código
+  "exclude": ["node_modules", "dist"]
+}
