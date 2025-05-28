@@ -17,6 +17,7 @@ import MessagesView from "./views/MessagesView";
 import ProfileView from "./views/ProfileView";
 import AllPackages from "./views/AllPackages";
 import Reservation from "./views/Reservation";
+import ConfirmPayment from "./views/ConfirmPayment";
 
 // Mapea las rutas con tus tabs
 const pathToTab = {
@@ -34,6 +35,7 @@ const pathToTab = {
   "/perfil": "perfil",
   "/paquetes": "paquetes",
   "/reserva": "reserva",
+  "/pago": "pago",
 };
 
 export default function App() {
@@ -98,6 +100,10 @@ export default function App() {
       case "reserva":
         return (
           <Reservation activeTab={activeTab} setActiveTab={setActiveTab} />
+        );
+      case "pago":
+        return (
+          <ConfirmPayment activeTab={activeTab} setActiveTab={setActiveTab} />
         );
       default:
         return <LandingPage setActiveTab={setActiveTab} />;

@@ -2,10 +2,13 @@ import { useState } from "react";
 import { ChevronLeft, ChevronRight, Clock, ArrowRight } from "lucide-react";
 
 import PageLayout from "../components/layout/PageLayout";
+import FlightDetailsModal from "../components/reservation/Modal";
 
 export default function ReservaPaqueteViaje() {
   const [selectedDate, setSelectedDate] = useState(22);
   const [selectedHorario, setSelectedHorario] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedFlightDetails, setSelectedFlightDetails] = useState(null);
 
   // Datos del calendario
   const diasSemana = ["S", "L", "M", "M", "J", "V", "S"];
@@ -39,8 +42,8 @@ export default function ReservaPaqueteViaje() {
     {
       id: 3,
       codigo: "CTM 433",
-      salida: "4:54 am",
-      llegada: "4:54 pm",
+      salida: "5:00 am",
+      llegada: "8:30 am",
       duracion: "12h 00m",
       escalas: "Sin escalas",
       disponible: true,
@@ -48,23 +51,35 @@ export default function ReservaPaqueteViaje() {
     {
       id: 4,
       codigo: "CTM 434",
-      salida: "4:54 am",
-      llegada: "4:54 pm",
+      salida: "10:00 am",
+      llegada: "3:00 pm",
       duracion: "12h 00m",
-      escalas: "Sin escalas",
+      escalas: "Con escala",
       disponible: true,
     },
   ];
+
+  // Función para abrir el modal con los detalles del vuelo
+  const handleVerDetalles = (horario) => {
+    setSelectedFlightDetails(horario);
+    setIsModalOpen(true);
+  };
+
+  // Función para cerrar el modal
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedFlightDetails(null);
+  };
 
   return (
     <PageLayout className="min-h-auto bg-gray-50">
       {/* Header */}
       <div className="bg-white border-b border-gray-200 px-8 py-6">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold text-gray-900">
+          <h1 className="text-center text-3xl font-bold text-gray-900">
             Reservar Paquete de Viaje
           </h1>
-          <p className="text-gray-600 mt-2">
+          <p className="text-center text-gray-600 mt-2">
             Selecciona la fecha y horario de tu preferencia
           </p>
         </div>
@@ -90,7 +105,7 @@ export default function ReservaPaqueteViaje() {
             </div>
 
             {/* Días de la semana */}
-            <div className="flex gap-26 mb-2 pl-6">
+            <div className="flex md:gap-26 mb-2 pl-6 sm:gap-16">
               {diasSemana.map((dia, index) => (
                 <div
                   key={index}
@@ -179,7 +194,13 @@ export default function ReservaPaqueteViaje() {
                       </div>
                     </div>
 
-                    <button className="text-orange-500 text-sm font-medium hover:text-orange-600 transition-colors ml-4">
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation(); // Evita que se seleccione el horario al hacer clic en "Ver detalles"
+                        handleVerDetalles(horario);
+                      }}
+                      className="text-orange-500 text-sm font-medium hover:text-orange-600 transition-colors ml-4 cursor-pointer"
+                    >
                       Ver detalles
                     </button>
                   </div>
@@ -191,10 +212,11 @@ export default function ReservaPaqueteViaje() {
 
         {/* Botón de continuar */}
         <div className="mt-8 text-center">
-          <button
+          <a
+            href="/pago"
             disabled={!selectedHorario}
             className={`
-              px-8 py-4 rounded-xl font-semibold text-lg transition-all
+              px-8 py-4 rounded-xl font-semibold text-lg transition-all cursor-pointer
               ${
                 selectedHorario
                   ? "bg-orange-500 text-white hover:bg-orange-600"
@@ -203,7 +225,7 @@ export default function ReservaPaqueteViaje() {
             `}
           >
             Continuar con la Reserva
-          </button>
+          </a>
         </div>
 
         {/* Información adicional */}
@@ -222,6 +244,13 @@ export default function ReservaPaqueteViaje() {
           </div>
         </div>
       </div>
+
+      {/* Modal de detalles del vuelo */}
+      <FlightDetailsModal 
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        flightData={selectedFlightDetails}
+      />
     </PageLayout>
   );
 }
