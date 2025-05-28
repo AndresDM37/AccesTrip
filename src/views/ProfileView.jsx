@@ -19,7 +19,7 @@ const ProfileView = () => {
         <div className="flex flex-col items-center mb-8">
           <div className="w-24 h-24 rounded-full overflow-hidden mb-4">
             <img
-              src="https://i.pravatar.cc/96"
+              src="https://i.pravatar.cc/40"
               alt="Perfil"
               className="w-full h-full object-cover"
             />
