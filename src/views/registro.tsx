@@ -73,7 +73,6 @@ const EmailSentModal = ({ email, onClose }: { email: string; onClose: () => void
 };
 
 const Registro = ({ setActiveTab }: RegistroProps) => {
-  // Añadidos los estados que faltaban para los inputs
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -83,6 +82,12 @@ const Registro = ({ setActiveTab }: RegistroProps) => {
   const { setUser } = useUser();
 
   const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
+
+  // Validación de contraseña actualizada
+  const isValidPassword = (password: string) => {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.*\s).{8,}$/;
+    return regex.test(password);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -123,16 +128,18 @@ const Registro = ({ setActiveTab }: RegistroProps) => {
       return;
     }
 
-    if (password.length < 8) {
-      alert("La contraseña debe tener al menos 8 caracteres.");
+    if (!isValidPassword(password)) {
+      alert(
+        "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un carácter especial y no puede contener espacios."
+      );
       return;
     }
 
-    //Usuarios
-    const users = JSON.parse(localStorage.getItem("usuarios") || "[]")
+    // Obtener usuarios guardados en localStorage
+    const users = JSON.parse(localStorage.getItem("usuarios") || "[]");
 
-    //Nuevo
-    const newUser = { name, email, password}
+    // Nuevo usuario
+    const newUser = { name, email, password };
 
     const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
     const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID2;
@@ -153,18 +160,19 @@ const Registro = ({ setActiveTab }: RegistroProps) => {
       verify_link: `${baseUrl}/login?email=${encodeURIComponent(email)}`,
     };
 
-    //Usuario existente
-    const userExist = users.some((user: any) => user.email === email)
+    // Verificar si usuario ya existe
+    const userExist = users.some((user: any) => user.email === email);
 
     if (userExist) {
-      alert("Este correo ya está registrado. Por favor, Inicia Sesión")
-      setSending(false)
-      return
+      alert("Este correo ya está registrado. Por favor, Inicia Sesión");
+      setSending(false);
+      return;
     }
 
-    localStorage.setItem("usuarios", JSON.stringify([...users, newUser]))
+    // Guardar usuario nuevo
+    localStorage.setItem("usuarios", JSON.stringify([...users, newUser]));
 
-    //Contexto usuario
+    // Actualizar contexto usuario
     setUser({ name, email });
 
     try {
@@ -224,7 +232,9 @@ const Registro = ({ setActiveTab }: RegistroProps) => {
             className="w-full px-4 py-5 border border-gray-300 rounded-2xl bg-white focus:outline-none focus:ring-2 focus:ring-orange-400"
           />
 
-          <p className="text-sm text-gray-600">La contraseña debe tener al menos 8 caracteres</p>
+          <p className="text-sm text-gray-600">
+            La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un carácter especial y no puede contener espacios.
+          </p>
 
           <button
             type="submit"
@@ -233,32 +243,12 @@ const Registro = ({ setActiveTab }: RegistroProps) => {
               sending ? "opacity-70 cursor-not-allowed" : ""
             }`}
           >
-            {sending ? "Enviando..." : "Registro"}
+            {sending ? "Enviando..." : "Registrarse"}
           </button>
         </form>
-
-        <div className="mt-8 text-center text-sm text-gray-600">
-          ¿Ya tienes una cuenta?{" "}
-          <button
-            type="button"
-            onClick={() => setActiveTab("login")}
-            className="text-orange-500 hover:underline font-medium cursor-pointer"
-          >
-            Iniciar Sesión
-          </button>
-        </div>
       </div>
 
-      {/* Modal usando el estado emailSent y sentEmail */}
-      {emailSent && (
-        <EmailSentModal
-          email={sentEmail}
-          onClose={() => {
-            setEmailSent(false);
-            setActiveTab("login");
-          }}
-        />
-      )}
+      {emailSent && <EmailSentModal email={sentEmail} onClose={() => setEmailSent(false)} />}
     </div>
   );
 };

@@ -29,9 +29,23 @@ const Login = ({ setActiveTab }: { setActiveTab: (tab: LandingTab) => void }) =>
     }
   };
 
+  // Función para validar la contraseña
+  const validarPassword = (password: string): boolean => {
+    // 8+ caracteres, al menos una mayúscula, una minúscula, un caracter especial, no espacios
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_])(?!.*\s).{8,}$/;
+    return regex.test(password);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+
+    if (!validarPassword(password)) {
+      setError(
+        "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un carácter especial y no contener espacios."
+      );
+      return;
+    }
 
     // Obtener usuarios del localStorage
     const usuarios = obtenerUsuarios();

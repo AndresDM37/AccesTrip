@@ -6,11 +6,19 @@ const CambiCont = ({ setActiveTab }: { setActiveTab: (tab: string) => void }) =>
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
 
+  // Función para validar contraseña: min 8 chars, mayúscula, minúscula, especial, sin espacios
+  const isValidPassword = (password: string) => {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_])(?!.*\s).{8,}$/;
+    return regex.test(password);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (newPassword.length < 8) {
-      setError("La contraseña debe tener al menos 8 caracteres");
+    if (!isValidPassword(newPassword)) {
+      setError(
+        "La contraseña debe tener al menos 8 caracteres, incluir mayúscula, minúscula, un carácter especial y no contener espacios."
+      );
       return;
     }
 
@@ -92,3 +100,4 @@ const CambiCont = ({ setActiveTab }: { setActiveTab: (tab: string) => void }) =>
 };
 
 export default CambiCont;
+  
