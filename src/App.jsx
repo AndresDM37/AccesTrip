@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { DestinationProvider } from "./context/DestinationContext";
+import { UserProvider } from "./context/UserContext";
 
 import SecondLanding from "./components/Landing/SecondLanding";
 import Thirdlanding from "./components/Landing/ThirdLanding";
@@ -102,15 +103,17 @@ export default function App() {
   };
 
   return (
-    <DestinationProvider>
-      {["landing", "secondlanding", "thirdlanding", "login", "registro", "recuperar", "cambiar"].includes(activeTab) ? (
-        renderActiveView()
-      ) : (
-        <div className="flex min-h-screen bg-gray-100">
-          <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-          <div className="flex-1">{renderActiveView()}</div>
-        </div>
-      )}
-    </DestinationProvider>
+    <UserProvider>
+      <DestinationProvider>
+        {["landing", "secondlanding", "thirdlanding", "login", "registro", "recuperar", "cambiar"].includes(activeTab) ? (
+          renderActiveView()
+        ) : (
+          <div className="flex min-h-screen bg-gray-100">
+            <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+            <div className="flex-1">{renderActiveView()}</div>
+          </div>
+        )}
+      </DestinationProvider>
+    </UserProvider>
   );
 }

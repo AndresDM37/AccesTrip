@@ -43,6 +43,11 @@ const ProfileView = () => {
             <div
               key={index}
               className="flex items-center p-4 border-b border-gray-100 last:border-b-0 cursor-pointer hover:bg-gray-50"
+              onClick={() => {
+                if (item.text === "Cerrar sesión") {
+                  window.location.href = "/login"; // Esto manda directo al login sin rollos
+                }
+              }}
             >
               <div className="text-gray-500 mr-4">{item.icon}</div>
               <span>{item.text}</span>
