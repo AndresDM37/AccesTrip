@@ -81,69 +81,71 @@ const RecuperarContr = ({ setActiveTab }: RecuperarContrProps) => {
   const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!email) {
-      alert("Por favor ingresa un correo electrónico.");
-      return;
-    }
+  if (!email) {
+    alert("Por favor ingresa un correo electrónico.");
+    return;
+  }
 
-    if (!isValidEmail(email)) {
-      alert("Por favor ingresa un correo electrónico válido.");
-      return;
-    }
+  if (!isValidEmail(email)) {
+    alert("Por favor ingresa un correo electrónico válido.");
+    return;
+  }
 
-    // Validar dominios permitidos
-    const allowedDomains = [
-      "@gmail.com",
-      "@outlook.com",
-      "@hotmail.com",
-      "@yahoo.com",
-      "@umb.edu.co",
-    ];
+  // Validar dominios permitidos
+  const allowedDomains = [
+    "@gmail.com",
+    "@outlook.com",
+    "@hotmail.com",
+    "@yahoo.com",
+    "@umb.edu.co",
+  ];
 
-    const emailLower = email.toLowerCase();
-    const isAllowedDomain = allowedDomains.some((domain) =>
-      emailLower.endsWith(domain)
+  const emailLower = email.toLowerCase();
+  const isAllowedDomain = allowedDomains.some((domain) =>
+    emailLower.endsWith(domain)
+  );
+
+  if (!isAllowedDomain) {
+    alert(
+      "El correo que ingresaste no es válido. Por favor, ingresa un correo con alguno de los siguientes dominios: gmail.com, outlook.com, hotmail.com, yahoo.com, umb.edu.co"
     );
+    return;
+  }
 
-    if (!isAllowedDomain) {
-      alert(
-        "El correo que ingresaste no es válido. Por favor, ingresa un correo con alguno de los siguientes dominios: gmail.com, outlook.com, hotmail.com, yahoo.com, umb.edu.co"
-      );
-      return;
-    }
+  const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+  const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+  const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+  if (!serviceId || !templateId || !publicKey) {
+    alert("Configuración de EmailJS incompleta. Revisa las variables de entorno.");
+    return;
+  }
 
-    if (!serviceId || !templateId || !publicKey) {
-      alert("Configuración de EmailJS incompleta. Revisa las variables de entorno.");
-      return;
-    }
+  setSending(true);
 
-    setSending(true);
+ const baseUrl = import.meta.env.VITE_APP_BASE_URL || window.location.origin;
 
-    const templateParams = {
-      to_email: email,
-      reset_link: `https://accesstrip.com/reset-password?`,
-    };
-
-    try {
-      await emailjs.send(serviceId, templateId, templateParams, publicKey);
-      setEmailSent(true);
-      setSentEmail(email);
-      setEmail("");
-    } catch (error) {
-      console.error("Error enviando correo:", error);
-      alert(
-        "Hubo un problema enviando el correo. Por favor, intenta de nuevo más tarde."
-      );
-    } finally {
-      setSending(false);
-    }
+  const templateParams = {
+    to_email: email,
+    reset_link: `${baseUrl}/cambiarContr?email=${encodeURIComponent(email)}`,
   };
+
+  try {
+    await emailjs.send(serviceId, templateId, templateParams, publicKey);
+    setEmailSent(true);
+    setSentEmail(email);
+    setEmail("");
+  } catch (error) {
+    console.error("Error enviando correo:", error);
+    alert(
+      "Hubo un problema enviando el correo. Por favor, intenta de nuevo más tarde."
+    );
+  } finally {
+    setSending(false);
+  }
+};
 
   return (
     <div className="relative min-h-screen flex items-start sm:items-center justify-center pt-10 sm:pt-0 px-4 bg-gradient-to-br from-orange-100 via-white to-orange-200 sm:from-orange-200 sm:via-orange-100 sm:to-orange-300 transition-all duration-300">
