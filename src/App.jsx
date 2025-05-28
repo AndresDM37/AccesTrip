@@ -5,6 +5,7 @@ import { UserProvider } from "./context/UserContext";
 import SecondLanding from "./components/Landing/SecondLanding";
 import Thirdlanding from "./components/Landing/ThirdLanding";
 import Sidebar from "./components/layout/Sidebar";
+import BottomNavigation from "./components/layout/BottomNavigation"; // <-- IMPORTA el BottomNavigation aquí
 
 import LandingPage from "./views/LandingPage";
 import Login from "./views/login";
@@ -102,18 +103,27 @@ export default function App() {
     }
   };
 
+  // Aquí la clave:
+  const isAuthLayout = !["landing", "secondlanding", "thirdlanding", "login", "registro", "recuperar", "cambiar"].includes(activeTab);
+
   return (
-    <UserProvider>
-      <DestinationProvider>
-        {["landing", "secondlanding", "thirdlanding", "login", "registro", "recuperar", "cambiar"].includes(activeTab) ? (
-          renderActiveView()
-        ) : (
-          <div className="flex min-h-screen bg-gray-100">
+  <UserProvider>
+    <DestinationProvider>
+      {isAuthLayout ? (
+        <div className="flex min-h-screen bg-gray-100 flex-col">
+          <div className="flex flex-1">
             <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
             <div className="flex-1">{renderActiveView()}</div>
           </div>
-        )}
-      </DestinationProvider>
-    </UserProvider>
-  );
+          {/* BottomNavigation solo visible en móvil */}
+          <div className="block md:hidden">
+            <BottomNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
+          </div>
+        </div>
+      ) : (
+        renderActiveView()
+      )}
+    </DestinationProvider>
+  </UserProvider>
+);
 }
