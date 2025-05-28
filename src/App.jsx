@@ -70,13 +70,9 @@ export default function App() {
       case "registro":
         return <Registro setActiveTab={setActiveTab} />;
       case "recuperar":
-<<<<<<< HEAD
         return <RecuperarContr setActiveTab={setActiveTab} />
       case "cambiar":
         return <CambiarContr setActiveTab={setActiveTab} />
-=======
-        return <RecuperarContr setActiveTab={setActiveTab} />;
->>>>>>> 6f13f39 (Vista Reservación, Explorar, y Mensajes, Mejora Navegación, Ajuste de rutas)
       case "inicio":
         return <HomeView activeTab={activeTab} setActiveTab={setActiveTab} />;
       case "mapa":
@@ -109,7 +105,6 @@ export default function App() {
   };
 
   return (
-<<<<<<< HEAD
   <DestinationProvider>
     {["landing", "secondlanding", "thirdlanding", "login", "registro", "recuperar", "cambiar"].includes(activeTab) ? (
       renderActiveView()
@@ -121,24 +116,4 @@ export default function App() {
     )}
   </DestinationProvider>
 );
-=======
-    <DestinationProvider>
-      {[
-        "landing",
-        "secondlanding",
-        "thirdlanding",
-        "login",
-        "registro",
-        "recuperar",
-      ].includes(activeTab) ? (
-        renderActiveView()
-      ) : (
-        <div className="flex min-h-screen bg-gray-100">
-          <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-          <div className="flex-1">{renderActiveView()}</div>
-        </div>
-      )}
-    </DestinationProvider>
-  );
->>>>>>> 6f13f39 (Vista Reservación, Explorar, y Mensajes, Mejora Navegación, Ajuste de rutas)
 }
