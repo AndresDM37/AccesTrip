@@ -4,6 +4,7 @@ import SecondLanding from "./components/Landing/SecondLanding";
 import Thirdlanding from "./components/Landing/ThirdLanding";
 import Login from "./views/login";
 import Registro from "./views/registro";
+import RecuperarContr from "./views/RecuperContraseña";
 import HomeView from "./views/Home";
 import ExploreView from "./views/ExploreView";
 import FavoritesView from "./views/FavoritesView";
@@ -19,6 +20,7 @@ const pathToTab = {
   "/tercera": "thirdlanding",
   "/login": "login",
   "/registro": "registro",
+  "/recuperarContr": "recuperar",
   "/inicio": "inicio",
   "/mapa": "mapa",
   "/favoritos": "favoritos",
@@ -59,6 +61,8 @@ export default function App() {
         return <Login setActiveTab={setActiveTab} />
       case "registro":
         return <Registro setActiveTab={setActiveTab} />
+      case "recuperar":
+        return <RecuperarContr setActiveTab={setActiveTab} />
       case "inicio":
         return <HomeView activeTab={activeTab} setActiveTab={setActiveTab} />;
       case "mapa":
@@ -76,7 +80,7 @@ export default function App() {
 
   return (
   <DestinationProvider>
-    {["landing", "secondlanding", "thirdlanding", "login", "registro", ""].includes(activeTab) ? (
+    {["landing", "secondlanding", "thirdlanding", "login", "registro", "recuperar"].includes(activeTab) ? (
       renderActiveView()
     ) : (
       <div className="flex min-h-screen bg-gray-100">

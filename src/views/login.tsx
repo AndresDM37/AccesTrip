@@ -43,7 +43,7 @@ const Login = ({ setActiveTab }: { setActiveTab: (tab: string) => void }) => {
           <div className="text-right">
             <button
               type="button"
-              onClick={() => setActiveTab("forgot-password")}
+              onClick={() => setActiveTab("recuperar")}
               className="text-sm sm:text-xs text-orange-500 hover:underline cursor-pointer"
             >
               ¿Olvidaste tu contraseña?
