@@ -19,6 +19,7 @@ import MessagesView from "./views/MessagesView";
 import ProfileView from "./views/ProfileView";
 import AllPackages from "./views/AllPackages";
 import Reservation from "./views/Reservation";
+import ConfirmPayment from "./views/ConfirmPayment";
 
 const pathToTab = {
   "/": "landing",
@@ -35,6 +36,7 @@ const pathToTab = {
   "/perfil": "perfil",
   "/paquetes": "paquetes",
   "/reserva": "reserva",
+  "/pago": "pago",
 };
 
 const tabToPath = Object.entries(pathToTab).reduce((acc, [path, tab]) => {
