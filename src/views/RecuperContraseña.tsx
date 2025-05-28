@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FiMail } from "react-icons/fi";
+import emailjs from "@emailjs/browser";
 import BackButton from "../components/ui/BackButton";
 
 type RecuperarContrProps = {
@@ -60,10 +61,32 @@ const EmailSentModal = ({
 const RecuperarContr = ({ setActiveTab }: RecuperarContrProps) => {
   const [email, setEmail] = useState("");
   const [emailSent, setEmailSent] = useState(false);
+  const [sending, setSending] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setEmailSent(true);
+
+    if (!email) return;
+
+    setSending(true);
+
+    const templateParams = {
+      user_email: email,
+    };
+
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+    try {
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      setEmailSent(true);
+    } catch (error) {
+      console.error("Error enviando correo:", error);
+      alert("Hubo un problema enviando el correo. Por favor, intenta de nuevo.");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -93,13 +116,17 @@ const RecuperarContr = ({ setActiveTab }: RecuperarContrProps) => {
             onChange={(e) => setEmail(e.target.value)}
             required
             className="w-full px-4 py-5 sm:py-4 border border-gray-300 rounded-2xl text-lg sm:text-base bg-white focus:outline-none focus:ring-2 focus:ring-orange-400 transition duration-300"
+            disabled={sending}
           />
 
           <button
             type="submit"
-            className="w-full py-5 sm:py-4 bg-orange-500 text-white font-semibold rounded-2xl text-lg sm:text-base hover:bg-orange-600 transition duration-300 shadow-md hover:shadow-lg shadow-orange-400/30 cursor-pointer"
+            disabled={sending}
+            className={`w-full py-5 sm:py-4 bg-orange-500 text-white font-semibold rounded-2xl text-lg sm:text-base hover:bg-orange-600 transition duration-300 shadow-md hover:shadow-lg shadow-orange-400/30 cursor-pointer ${
+              sending ? "opacity-70 cursor-not-allowed" : ""
+            }`}
           >
-            Recuperar contraseña
+            {sending ? "Enviando..." : "Recuperar contraseña"}
           </button>
         </form>
 
