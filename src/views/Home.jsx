@@ -1,6 +1,4 @@
 import { useState } from "react";
-import Header from "../components/layout/Header";
-import CategoriesSection from "../components/home/CategoriesSection";
 import PopularDestinations from "../components/home/PopularDestinations";
 import FeaturedExperience from "../components/home/FeaturedExperience";
 import DestinationDetail from "../components/destination/DestinationDetail";
@@ -42,9 +40,6 @@ export default function HomeView() {
               </button>
             </div>
           </div>
-
-          {/* Categories */}
-          <CategoriesSection />
 
           {/* Popular Destinations */}
           <PopularDestinations

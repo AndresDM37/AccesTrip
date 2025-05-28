@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
-import LandingPage from "./views/LandingPage";
+import { DestinationProvider } from "./context/DestinationContext";
+
 import SecondLanding from "./components/Landing/SecondLanding";
 import Thirdlanding from "./components/Landing/ThirdLanding";
+import Sidebar from "./components/layout/Sidebar";
+
+import LandingPage from "./views/LandingPage";
 import Login from "./views/login";
 import Registro from "./views/registro";
 import RecuperarContr from "./views/RecuperContraseña";
@@ -11,8 +15,8 @@ import ExploreView from "./views/ExploreView";
 import FavoritesView from "./views/FavoritesView";
 import MessagesView from "./views/MessagesView";
 import ProfileView from "./views/ProfileView";
-import { DestinationProvider } from "./context/DestinationContext";
-import Sidebar from "./components/layout/Sidebar";
+import AllPackages from "./views/AllPackages";
+import Reservation from "./views/Reservation";
 
 // Mapea las rutas con tus tabs
 const pathToTab = {
@@ -28,6 +32,8 @@ const pathToTab = {
   "/favoritos": "favoritos",
   "/mensajes": "mensajes",
   "/perfil": "perfil",
+  "/paquetes": "paquetes",
+  "/reserva": "reserva",
 };
 
 export default function App() {
@@ -56,13 +62,13 @@ export default function App() {
       case "landing":
         return <LandingPage setActiveTab={setActiveTab} />;
       case "secondlanding":
-        return <SecondLanding setActiveTab={setActiveTab} />
+        return <SecondLanding setActiveTab={setActiveTab} />;
       case "thirdlanding":
-        return <Thirdlanding setActiveTab={setActiveTab} />
+        return <Thirdlanding setActiveTab={setActiveTab} />;
       case "login":
-        return <Login setActiveTab={setActiveTab} />
+        return <Login setActiveTab={setActiveTab} />;
       case "registro":
-        return <Registro setActiveTab={setActiveTab} />
+        return <Registro setActiveTab={setActiveTab} />;
       case "recuperar":
         return <RecuperarContr setActiveTab={setActiveTab} />
       case "cambiar":
@@ -70,13 +76,29 @@ export default function App() {
       case "inicio":
         return <HomeView activeTab={activeTab} setActiveTab={setActiveTab} />;
       case "mapa":
-        return <ExploreView activeTab={activeTab} setActiveTab={setActiveTab} />;
+        return (
+          <ExploreView activeTab={activeTab} setActiveTab={setActiveTab} />
+        );
       case "favoritos":
-        return <FavoritesView activeTab={activeTab} setActiveTab={setActiveTab} />;
+        return (
+          <FavoritesView activeTab={activeTab} setActiveTab={setActiveTab} />
+        );
       case "mensajes":
-        return <MessagesView activeTab={activeTab} setActiveTab={setActiveTab} />;
+        return (
+          <MessagesView activeTab={activeTab} setActiveTab={setActiveTab} />
+        );
       case "perfil":
-        return <ProfileView activeTab={activeTab} setActiveTab={setActiveTab} />;
+        return (
+          <ProfileView activeTab={activeTab} setActiveTab={setActiveTab} />
+        );
+      case "paquetes":
+        return (
+          <AllPackages activeTab={activeTab} setActiveTab={setActiveTab} />
+        );
+      case "reserva":
+        return (
+          <Reservation activeTab={activeTab} setActiveTab={setActiveTab} />
+        );
       default:
         return <LandingPage setActiveTab={setActiveTab} />;
     }

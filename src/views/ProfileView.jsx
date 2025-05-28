@@ -24,8 +24,8 @@ const ProfileView = () => {
               className="w-full h-full object-cover"
             />
           </div>
-          <h1 className="text-2xl font-bold">Juan Pérez</h1>
-          <p className="text-gray-600">juan.perez@email.com</p>
+          <h1 className="text-2xl font-bold">Nombre de Usuario</h1>
+          <p className="text-gray-600">usuario@correo.com</p>
         </div>
 
         <div className="bg-white rounded-lg shadow overflow-hidden">
