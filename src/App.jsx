@@ -9,7 +9,7 @@ import LandingPage from "./views/LandingPage";
 import Login from "./views/login";
 import Registro from "./views/registro";
 import RecuperarContr from "./views/RecuperContraseña";
-import CambiarContr from "./views/CambiarContr"
+import CambiarContr from "./views/CambiarContr";
 import HomeView from "./views/Home";
 import ExploreView from "./views/ExploreView";
 import FavoritesView from "./views/FavoritesView";
@@ -18,7 +18,6 @@ import ProfileView from "./views/ProfileView";
 import AllPackages from "./views/AllPackages";
 import Reservation from "./views/Reservation";
 
-// Mapea las rutas con tus tabs
 const pathToTab = {
   "/": "landing",
   "/segunda": "secondlanding",
@@ -36,24 +35,34 @@ const pathToTab = {
   "/reserva": "reserva",
 };
 
-export default function App() {
-  const [activeTab, setActiveTab] = useState("landing");
+const tabToPath = Object.entries(pathToTab).reduce((acc, [path, tab]) => {
+  acc[tab] = path;
+  return acc;
+}, {});
 
-  // Esto se ejecuta al inicio: lee la URL actual y cambia el tab
+export default function App() {
+  const [activeTab, setActiveTab] = useState(() => {
+    const initialPath = window.location.pathname;
+    return pathToTab[initialPath] || "landing";
+  });
+
   useEffect(() => {
-    const currentPath = window.location.pathname;
-    const tab = pathToTab[currentPath] || "landing";
-    setActiveTab(tab);
+    const handleRoute = () => {
+      const currentPath = window.location.pathname;
+      const tab = pathToTab[currentPath] || "landing";
+      console.log("📍 Ruta actual:", currentPath);
+      console.log("🧭 Tab resuelto:", tab);
+      setActiveTab(tab);
+    };
+
+    window.addEventListener("popstate", handleRoute);
+    return () => window.removeEventListener("popstate", handleRoute);
   }, []);
 
-  // Cambiar la URL cuando cambia el tab
   useEffect(() => {
-    const currentPath = Object.entries(pathToTab).find(
-      ([, tab]) => tab === activeTab
-    )?.[0];
-
-    if (currentPath && window.location.pathname !== currentPath) {
-      window.history.pushState({}, "", currentPath);
+    const newPath = tabToPath[activeTab];
+    if (window.location.pathname !== newPath) {
+      window.history.pushState({}, "", newPath);
     }
   }, [activeTab]);
 
@@ -70,50 +79,38 @@ export default function App() {
       case "registro":
         return <Registro setActiveTab={setActiveTab} />;
       case "recuperar":
-        return <RecuperarContr setActiveTab={setActiveTab} />
+        return <RecuperarContr setActiveTab={setActiveTab} />;
       case "cambiar":
-        return <CambiarContr setActiveTab={setActiveTab} />
+        return <CambiarContr setActiveTab={setActiveTab} />;
       case "inicio":
         return <HomeView activeTab={activeTab} setActiveTab={setActiveTab} />;
       case "mapa":
-        return (
-          <ExploreView activeTab={activeTab} setActiveTab={setActiveTab} />
-        );
+        return <ExploreView activeTab={activeTab} setActiveTab={setActiveTab} />;
       case "favoritos":
-        return (
-          <FavoritesView activeTab={activeTab} setActiveTab={setActiveTab} />
-        );
+        return <FavoritesView activeTab={activeTab} setActiveTab={setActiveTab} />;
       case "mensajes":
-        return (
-          <MessagesView activeTab={activeTab} setActiveTab={setActiveTab} />
-        );
+        return <MessagesView activeTab={activeTab} setActiveTab={setActiveTab} />;
       case "perfil":
-        return (
-          <ProfileView activeTab={activeTab} setActiveTab={setActiveTab} />
-        );
+        return <ProfileView activeTab={activeTab} setActiveTab={setActiveTab} />;
       case "paquetes":
-        return (
-          <AllPackages activeTab={activeTab} setActiveTab={setActiveTab} />
-        );
+        return <AllPackages activeTab={activeTab} setActiveTab={setActiveTab} />;
       case "reserva":
-        return (
-          <Reservation activeTab={activeTab} setActiveTab={setActiveTab} />
-        );
+        return <Reservation activeTab={activeTab} setActiveTab={setActiveTab} />;
       default:
         return <LandingPage setActiveTab={setActiveTab} />;
     }
   };
 
   return (
-  <DestinationProvider>
-    {["landing", "secondlanding", "thirdlanding", "login", "registro", "recuperar", "cambiar"].includes(activeTab) ? (
-      renderActiveView()
-    ) : (
-      <div className="flex min-h-screen bg-gray-100">
-        <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-        <div className="flex-1">{renderActiveView()}</div>
-      </div>
-    )}
-  </DestinationProvider>
-);
+    <DestinationProvider>
+      {["landing", "secondlanding", "thirdlanding", "login", "registro", "recuperar", "cambiar"].includes(activeTab) ? (
+        renderActiveView()
+      ) : (
+        <div className="flex min-h-screen bg-gray-100">
+          <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+          <div className="flex-1">{renderActiveView()}</div>
+        </div>
+      )}
+    </DestinationProvider>
+  );
 }
