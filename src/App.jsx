@@ -5,7 +5,7 @@ import { UserProvider } from "./context/UserContext";
 import SecondLanding from "./components/Landing/SecondLanding";
 import Thirdlanding from "./components/Landing/ThirdLanding";
 import Sidebar from "./components/layout/Sidebar";
-import BottomNavigation from "./components/layout/BottomNavigation"; // <-- IMPORTA el BottomNavigation aquí
+import BottomNavigation from "./components/layout/BottomNavigation";
 
 import LandingPage from "./views/LandingPage";
 import Login from "./views/login";
