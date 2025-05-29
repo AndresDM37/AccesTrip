@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Edit3, Search } from "lucide-react";
 
 import PageLayout from "../components/layout/PageLayout";
@@ -7,94 +7,44 @@ import ChatView from "../components/messages/ChatView";
 const MessagesView = () => {
   const [activeTab, setActiveTab] = useState("mensajes");
   const [selectedChat, setSelectedChat] = useState(null);
-
-  const conversations = [
-    {
-      id: 1,
-      name: "Ahmed anjims",
-      lastMessage: "Hola, Mariana! 🤙 Como has estado?",
-      time: "08:45",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face&auto=format",
-      online: true,
-      status: "En línea"
-    },
-    {
-      id: 2,
-      name: "alem leain",
-      lastMessage: "Escribiendo...",
-      time: "08:2",
-      avatar: "https://images.unsplash.com/photo-1494790108755-2616b332c265?w=40&h=40&fit=crop&crop=face&auto=format",
-      online: true,
-      typing: true,
-      status: "En línea"
-    }
-  ];
+  const [searchTerm, setSearchTerm] = useState(""); // <---- Estado para la búsqueda
+  const [conversations, setConversations] = useState([
+    // ... tu array inicial sin cambios
+  ]);
 
   const chatMessages = {
-    1: [
-      {
-        id: 1,
-        text: "Hola! 9:24 ✓",
-        sender: "other",
-        time: "9:24",
-        delivered: true
-      },
-      {
-        id: 2,
-        text: "Muchas gracias por vuestro viaje, nos gustaron mucho los apartamentos nos quedaremos aquí otros 5 días...",
-        sender: "other",
-        time: "9:25",
-        delivered: true
-      },
-      {
-        id: 3,
-        text: "Hola! 9:24 ✓",
-        sender: "me",
-        time: "9:24",
-        delivered: true
-      },
-      {
-        id: 4,
-        text: "Estoy muy contento de que te guste😊",
-        sender: "me",
-        time: "9:25",
-        delivered: true,
-        avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face&auto=format"
-      },
-      {
-        id: 5,
-        text: "Llegaremos hoy a la 01:45, ¿habrá alguien en casa?",
-        sender: "me",
-        time: "9:37",
-        delivered: true,
-        avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face&auto=format"
-      },
-      {
-        id: 6,
-        text: "Estaré en casa 9:39 ✓",
-        sender: "other",
-        time: "9:39",
-        delivered: true
-      }
-    ],
-    2: [
-      {
-        id: 1,
-        text: "¡Hola! ¿Cómo estás?",
-        sender: "other",
-        time: "8:00",
-        delivered: true
-      },
-      {
-        id: 2,
-        text: "¡Muy bien, gracias! ¿Y tú?",
-        sender: "me",
-        time: "8:01",
-        delivered: true,
-        avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face&auto=format"
-      }
-    ]
+    1: [],
+    2: [],
+    3: [],
+    4: [],
+    5: [],
+    6: [],
+    7: [],
+    8: [],
+    9: [],
+    10: [],
   };
+
+  useEffect(() => {
+    // lógica para marcar mensajes nuevos (igual que antes)
+    const getRandomIndexes = (count, max) => {
+      const indexes = new Set();
+      while (indexes.size < count) {
+        indexes.add(Math.floor(Math.random() * max));
+      }
+      return Array.from(indexes);
+    };
+
+    const newIndexes = getRandomIndexes(5, conversations.length);
+
+    setConversations((prev) =>
+      prev.map((conv, idx) =>
+        newIndexes.includes(idx)
+          ? { ...conv, lastMessage: "Mensaje nuevo", isNew: true }
+          : { ...conv, lastMessage: "", isNew: false }
+      )
+    );
+  }, []);
 
   const handleChatSelect = (conversation) => {
     setSelectedChat(conversation);
@@ -104,86 +54,90 @@ const MessagesView = () => {
     setSelectedChat(null);
   };
 
-  // Si hay un chat seleccionado, mostrar el ChatView
+  // Filtramos las conversaciones según el texto de búsqueda (nombre o último mensaje)
+  const filteredConversations = conversations.filter((conv) =>
+    conv.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    conv.lastMessage.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   if (selectedChat) {
     return (
-      <ChatView 
+      <ChatView
         selectedChat={selectedChat}
         onBack={handleBackToList}
         messages={chatMessages[selectedChat.id]}
       />
     );
   }
-    return (
-      <PageLayout activeTab={activeTab} setActiveTab={setActiveTab}>
-        {/* Sub-header with title and edit icon */}
-        <div className="flex items-center justify-between px-4 py-3">
-          <h2 className="text-xl font-bold text-gray-900">Mensajes</h2>
-          <Edit3 className="w-5 h-5 text-gray-600" />
+
+  return (
+    <PageLayout activeTab={activeTab} setActiveTab={setActiveTab}>
+      {/* Sub-header */}
+      <div className="flex items-center justify-between px-6 py-4 border-b">
+        <h2 className="text-2xl font-semibold text-gray-800">Mensajes</h2>
+        <Edit3 className="w-5 h-5 text-gray-500" />
+      </div>
+
+      {/* Search bar */}
+      <div className="px-6 py-3">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Buscar chats o mensajes"
+            className="w-full pl-10 pr-4 py-2 bg-gray-100 rounded-full text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition"
+            value={searchTerm} // <-- bind value
+            onChange={(e) => setSearchTerm(e.target.value)} // <-- actualizar estado al escribir
+          />
         </div>
+      </div>
 
-        {/* Search Bar */}
-        <div className="px-4 pb-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Buscar chats & mensajes"
-              className="w-full pl-10 pr-4 py-2 bg-gray-100 rounded-lg text-sm text-gray-600 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white"
-            />
-          </div>
-        </div>
-
-        {/* Conversations List */}
-        <div className="flex-1 px-4">
-          {conversations.map((conversation) => (
-            <div
-              key={conversation.id}
-              className="flex items-center space-x-3 py-3 hover:bg-gray-50 rounded-lg px-2 cursor-pointer"
-              onClick={() => handleChatSelect(conversation)}
-            >
-              {/* Avatar with online indicator */}
-              <div className="relative">
-                <img
-                  src={conversation.avatar}
-                  alt={conversation.name}
-                  className="w-12 h-12 rounded-full object-cover"
-                />
-                {conversation.online && (
-                  <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
-                )}
-              </div>
-
-              {/* Message Content */}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-medium text-gray-900 truncate">
-                    {conversation.name}
-                  </h3>
-                  <div className="flex items-center space-x-1">
-                    {conversation.online && (
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    )}
-                    <span className="text-xs text-gray-500">
-                      {conversation.time}
-                    </span>
-                  </div>
-                </div>
-                <div className="flex items-center mt-1">
-                  <p
-                    className={`text-sm truncate ${
-                      conversation.typing ? "text-orange-500" : "text-gray-600"
-                    }`}
-                  >
-                    {conversation.lastMessage}
-                  </p>
-                </div>
-              </div>
+      {/* Lista de conversaciones filtradas */}
+      <div className="flex-1 overflow-y-auto px-4">
+        {filteredConversations.map((conversation) => (
+          <div
+            key={conversation.id}
+            onClick={() => handleChatSelect(conversation)}
+            className="flex items-center gap-4 py-3 px-4 hover:bg-orange-50 rounded-xl cursor-pointer transition-shadow shadow-sm hover:shadow-md"
+          >
+            {/* Avatar + estado online */}
+            <div className="relative">
+              <img
+                src={conversation.avatar}
+                alt={conversation.name}
+                className="w-12 h-12 rounded-full object-cover"
+              />
+              {conversation.online && (
+                <span className="absolute bottom-0 right-0 block w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span>
+              )}
             </div>
-          ))}
-        </div>
-      </PageLayout>
-    );
+
+            {/* Info principal */}
+            <div className="flex-1 min-w-0">
+              <div className="flex justify-between items-center">
+                <h3 className="text-base font-semibold text-gray-800 truncate">
+                  {conversation.name}
+                </h3>
+                <span className="text-xs text-gray-500">{conversation.time}</span>
+              </div>
+              <p
+                className={`text-sm truncate mt-1 ${
+                  conversation.isNew ? "text-orange-500 font-medium" : "text-gray-600"
+                }`}
+              >
+                {conversation.lastMessage}
+              </p>
+            </div>
+          </div>
+        ))}
+
+        {/* Mensaje cuando no hay resultados */}
+        {filteredConversations.length === 0 && (
+          <p className="text-center text-gray-500 mt-8">No se encontraron resultados.</p>
+        )}
+      </div>
+    </PageLayout>
+  );
 };
 
 export default MessagesView;

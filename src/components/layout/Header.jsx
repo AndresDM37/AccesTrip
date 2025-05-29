@@ -23,7 +23,7 @@ export default function Header() {
           </div>
           <div className="w-10 h-10 bg-gray-200 rounded-full">
             <img
-              src="https://i.pravatar.cc/40"
+              src="https://i.pravatar.cc/256"
               alt="Perfil"
               className="w-10 h-10 rounded-full"
             />
