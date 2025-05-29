@@ -92,7 +92,7 @@ export default function ReservaPaqueteViaje() {
             {/* Header del calendario */}
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold text-gray-900">
-                28 de Mayo
+                29 de Mayo
               </h2>
               <div className="flex items-center space-x-2">
                 <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">

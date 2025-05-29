@@ -59,7 +59,7 @@ const FeaturedExperience = () => {
                 <span className="ml-2 text-gray-500">(128 reseñas)</span>
               </div>
               <div className="font-bold text-lg text-orange-500">
-                $120/persona
+                $500/persona
               </div>
             </div>
             <button
