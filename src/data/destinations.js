@@ -7,7 +7,7 @@ export const destinations = [
     views: "1.2k",
     imageUrl: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
     country: "Colombia",
-    price: 80,
+    price: 900,
     currency: "$",
     reviews: 580,
     description:
@@ -28,7 +28,7 @@ export const destinations = [
     views: "2.4k",
     imageUrl: "/images/historico-cartagena.jpg",
     country: "Colombia",
-    price: 95,
+    price: 750,
     currency: "$",
     reviews: 430,
     description:
@@ -47,17 +47,17 @@ export const destinations = [
     views: "1.8k",
     imageUrl: "/images/Valle-del-cocora.jpeg",
     country: "Colombia",
-    price: 70,
+    price: 500,
     currency: "$",
     reviews: 320,
     description:
       "Camina entre las palmeras de cera más altas del mundo en este espectacular valle. El paquete incluye senderismo guiado, transporte local y degustación de productos de la región cafetera.",
     galleryImages: [
-      "/images/cocora-1.jpg",
-      "/images/cocora-2.jpg",
-      "/images/cocora-3.jpg",
-      "/images/cocora-4.jpg",
-      "/images/cocora-5.jpg",
+      "/images/Valle-del-cocora.jpeg",
+      "/images/Valle-del-cocora.jpeg",
+      "/images/Valle-del-cocora.jpeg",
+      "/images/Valle-del-cocora.jpeg",
+      "/images/Valle-del-cocora.jpeg",
     ],
   },
   {
@@ -70,15 +70,15 @@ export const destinations = [
     country: "Colombia",
     price: 85,
     currency: "$",
-    reviews: 650,
+    reviews: 700,
     description:
       "Experimenta la fusión perfecta entre la selva tropical y el mar Caribe. Este paquete incluye entrada al parque, alojamiento en ecohabs o hamacas, y guía especializado en naturaleza.",
     galleryImages: [
-      "/images/tayrona-1.jpg",
-      "/images/tayrona-2.jpg",
-      "/images/tayrona-3.jpg",
-      "/images/tayrona-4.jpg",
-      "/images/tayrona-5.jpg",
+      "/images/parque-tayrona.jpg",
+      "/images/parque-tayrona.jpg",
+      "/images/parque-tayrona.jpg",
+      "/images/parque-tayrona.jpg",
+      "/images/parque-tayrona.jpg",
     ],
   },
 ];

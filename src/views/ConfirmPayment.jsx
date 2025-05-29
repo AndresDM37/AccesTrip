@@ -28,7 +28,7 @@ export default function ConfirmarCompra() {
     salida: "4:54 am",
     llegada: "8:00 am",
     duracion: "3h 46m",
-    fecha: "28 de Mayo, 2025",
+    fecha: "29 de Mayo, 2025",
     escalas: "Sin escalas",
     pasajeros: 1,
     precio: 500000,
@@ -42,24 +42,18 @@ export default function ConfirmarCompra() {
   };
 
   const formatCardNumber = (value) => {
-    const cleaned = value.replace(/\s/g, "").replace(/[^0-9]/gi, "");
-    const matches = cleaned.match(/\d{4,16}/g);
-    const match = (matches && matches[0]) || "";
+    const cleaned = value.replace(/\D/g, "").slice(0, 16);
     const parts = [];
-    for (let i = 0, len = match.length; i < len; i += 4) {
-      parts.push(match.substring(i, i + 4));
+    for (let i = 0; i < cleaned.length; i += 4) {
+      parts.push(cleaned.slice(i, i + 4));
     }
-    if (parts.length) {
-      return parts.join(" ");
-    } else {
-      return match;
-    }
+    return parts.join(" ");
   };
 
   const formatExpiry = (value) => {
-    const cleaned = value.replace(/\D/g, "");
-    if (cleaned.length >= 2) {
-      return cleaned.substring(0, 2) + "/" + cleaned.substring(2, 4);
+    const cleaned = value.replace(/\D/g, "").slice(0, 4);
+    if (cleaned.length >= 3) {
+      return `${cleaned.slice(0, 2)}/${cleaned.slice(2)}`;
     }
     return cleaned;
   };
@@ -71,6 +65,7 @@ export default function ConfirmarCompra() {
       setIsProcessing(false);
       // Aquí redireccionar a página de confirmación
       alert("¡Pago procesado exitosamente!");
+      window.location.href = "/inicio"; 
     }, 3000);
   };
 
@@ -94,7 +89,7 @@ export default function ConfirmarCompra() {
             >
               <ArrowLeft className="w-5 h-5 text-gray-600" />
             </a>
-            <h1 className="text-3xl font-bold text-gray-900 cursor-pointer">
+            <h1 className="text-3xl font-bold text-gray-900">
               Confirmar Compra
             </h1>
           </div>
@@ -113,7 +108,6 @@ export default function ConfirmarCompra() {
                 <Plane className="w-5 h-5 text-orange-500 mr-2" />
                 Detalles del Vuelo
               </h2>
-
               <div className="bg-orange-50 rounded-xl p-4 mb-4">
                 <div className="flex items-center justify-between mb-3">
                   <span className="font-semibold text-orange-900 text-lg">
@@ -159,6 +153,16 @@ export default function ConfirmarCompra() {
                   </div>
                   <span className="font-medium text-gray-900">
                     {flightData.fecha}
+                  </span>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <Plane className="w-4 h-4 text-gray-500" />
+                    <span className="text-gray-600">Destino</span>
+                  </div>
+                  <span className="font-medium text-gray-900">
+                    Eje Cafetero
                   </span>
                 </div>
 
@@ -240,7 +244,7 @@ export default function ConfirmarCompra() {
                 </label>
                 <input
                   type="text"
-                  placeholder="Juan Pérez"
+                  placeholder="Nombre Apellido"
                   value={cardData.name}
                   onChange={(e) => handleInputChange("name", e.target.value)}
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
@@ -340,7 +344,7 @@ export default function ConfirmarCompra() {
                     <span>Procesando Pago...</span>
                   </div>
                 ) : (
-                  <div className="flex items-center justify-center space-x-2">
+                  <div className="flex items-center justify-center space-x-2 cursor-pointer">
                     <CheckCircle className="w-5 h-5" />
                     <span>Confirmar Compra</span>
                   </div>

@@ -35,9 +35,9 @@ export default function HomeView() {
               </p>
             </div>
             <div className="mt-4 md:mt-0">
-              <button className="bg-orange-500 text-white px-4 py-2 rounded-lg font-medium">
+              <a href="/mapa" className="bg-orange-500 text-white px-4 py-2 rounded-lg font-medium">
                 Planea tu viaje
-              </button>
+              </a>
             </div>
           </div>
 
